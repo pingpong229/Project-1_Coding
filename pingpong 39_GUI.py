@@ -3,48 +3,46 @@ from tkinter import messagebox
 
 def calculate_volume():
     try:
-        width = float(width_entry.get())
-        length = float(length_entry.get())
-        height = float(height_entry.get())
-        
-        if width <= 0 or length <= 0 or height <= 0:
-            messagebox.showerror("Error", "กรุณากรอกค่าที่เป็นบวก")
-            return
-        
+        width = float(entry_width.get())
+        length = float(entry_length.get())
+        height = float(entry_height.get())
         volume = (width * length * height) / 1_000_000
-        result_label.config(text=f"ปริมาตร: {volume:.6f} ลูกบาศก์เมตร")
+        label_result.config(text=f"Volume: {volume:.6f} cubic meters")
     except ValueError:
-        messagebox.showerror("Error", "กรุณากรอกตัวเลขที่ถูกต้อง")
+        messagebox.showerror("Error", "Please enter valid numbers")
 
-# สร้างหน้าต่างหลัก
+# Create main window
 root = tk.Tk()
-root.title("🟣 CUBIC METER CALCULATOR 🟣")
-root.geometry("300x250")
-root.configure(bg="#D8BFD8")  # ตั้งค่าสีม่วงพาสเทล
+root.title("Pink Volume Calculator")
+root.geometry("400x300")
+root.configure(bg="#FFC0CB")
 
-# ส่วนของ Label และ Entry
-width_label = tk.Label(root, text="ความกว้าง (cm):", bg="#D8BFD8")
-width_label.pack()
-width_entry = tk.Entry(root)
-width_entry.pack()
+# Title Label
+label_title = tk.Label(root, text="Cubic Meters", font=("Arial", 20, "bold"), bg="#FFC0CB")
+label_title.pack(pady=10)
 
-length_label = tk.Label(root, text="ความยาว (cm):", bg="#D8BFD8")
-length_label.pack()
-length_entry = tk.Entry(root)
-length_entry.pack()
+# Input Fields
+frame = tk.Frame(root, bg="#FFC0CB")
+frame.pack(pady=10)
 
-height_label = tk.Label(root, text="ความสูง (cm):", bg="#D8BFD8")
-height_label.pack()
-height_entry = tk.Entry(root)
-height_entry.pack()
+labels = ["Width (cm):", "Length (cm):", "Height (cm):"]
+entries = []
 
-# ปุ่มคำนวณ
-calculate_button = tk.Button(root, text="คำนวณ", command=calculate_volume)
-calculate_button.pack(pady=10)
+for i, text in enumerate(labels):
+    tk.Label(frame, text=text, font=("Arial", 12), bg="#FFC0CB").grid(row=i, column=0, padx=5, pady=5, sticky="w")
+    entry = tk.Entry(frame, font=("Arial", 12))
+    entry.grid(row=i, column=1, padx=5, pady=5)
+    entries.append(entry)
 
-# แสดงผลลัพธ์
-result_label = tk.Label(root, text="", bg="#D8BFD8")
-result_label.pack()
+entry_width, entry_length, entry_height = entries
 
-# เริ่มโปรแกรม
+# Calculate Button
+btn_calculate = tk.Button(root, text="Calculate Volume", font=("Arial", 12), command=calculate_volume, bg="#FF69B4", fg="white")
+btn_calculate.pack(pady=10)
+
+# Result Label
+label_result = tk.Label(root, text="", font=("Arial", 14, "bold"), bg="#FFC0CB")
+label_result.pack(pady=10)
+
+# Run the GUI
 root.mainloop()
